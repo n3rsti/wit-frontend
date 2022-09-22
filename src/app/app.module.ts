@@ -7,11 +7,13 @@ import { LoginComponent } from './components/login/login.component';
 import {TokenInterceptorModule} from "./modules/token-interceptor/token-interceptor.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

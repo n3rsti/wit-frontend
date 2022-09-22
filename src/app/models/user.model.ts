@@ -26,6 +26,10 @@ export class UserBuilder extends IUser{
     return this;
   }
 
+  build(): User {
+    return new User(this);
+  }
+
 }
 
 export class User extends IUser {

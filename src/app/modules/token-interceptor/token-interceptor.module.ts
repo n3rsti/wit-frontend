@@ -28,7 +28,7 @@ export class TokenInterceptor implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token: string = localStorage.getItem('token') || '';
+    const token: string = localStorage.getItem('access_token') || '';
     if (this.whitelistedUrls.includes(req.url.replace(Config.Host, ''))) {
       return next.handle(req);
     }
@@ -49,8 +49,9 @@ export class TokenInterceptor implements HttpInterceptor {
         }),
         tap((event: any) => {
           if (event instanceof HttpResponse) {
-            console.log(event);
-            this.router.navigate(['login']);
+            if (event.body?.status === 403) {
+              this.router.navigate(['login']);
+            }
           }
         })
       );

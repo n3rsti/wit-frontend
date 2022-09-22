@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {map, Observable, pluck, retry} from "rxjs";
 import {Config} from "../config";
+import {User, UserBuilder} from "../models/user.model";
 
 @Injectable({
   providedIn: 'root'
@@ -20,5 +21,17 @@ export class DataService {
     };
     return this.http.post(`${Config.Host}/api/v1/login`, body.toString(), options);
 
+  }
+
+  getUser(username: string): Observable<User>{
+    return this.http.get(`${Config.Host}/api/v1/users/${username}`).pipe(
+      map((user: any) => {
+        return new UserBuilder()
+          .setId(user.id)
+          .setUsername(user.username)
+          .build();
+      }),
+      retry(2)
+    )
   }
 }

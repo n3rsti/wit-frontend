@@ -32,7 +32,10 @@ export class LoginComponent implements OnInit {
   onSubmit(){
     this.data.login(this.username?.value, this.password?.value).subscribe({
       next: (resp: any) => {
-        console.log(resp);
+        if(resp.access_token){
+          localStorage.setItem("access_token", resp.access_token);
+          localStorage.setItem("refresh_token", resp.refresh_token);
+        }
       },
       error: (err: any) => {
         console.log(err);

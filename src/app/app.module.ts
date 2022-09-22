@@ -5,6 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import {TokenInterceptorModule} from "./modules/token-interceptor/token-interceptor.module";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -14,7 +16,10 @@ import {TokenInterceptorModule} from "./modules/token-interceptor/token-intercep
   imports: [
     BrowserModule,
     AppRoutingModule,
-    TokenInterceptorModule
+    TokenInterceptorModule,
+    FormsModule,
+    HttpClientModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

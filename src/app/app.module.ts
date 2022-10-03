@@ -8,12 +8,16 @@ import {TokenInterceptorModule} from "./modules/token-interceptor/token-intercep
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import { ProfileComponent } from './components/profile/profile.component';
+import {AuthGuard} from "./guards/auth.guard";
+import {DataService} from "./services/data.service";
+import { HomeComponent } from './layouts/home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    ProfileComponent
+    ProfileComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -23,7 +27,10 @@ import { ProfileComponent } from './components/profile/profile.component';
     HttpClientModule,
     ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [
+    AuthGuard,
+    DataService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

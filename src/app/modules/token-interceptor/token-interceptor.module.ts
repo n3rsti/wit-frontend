@@ -19,12 +19,16 @@ import {Config} from "../../config";
 
 
 export class TokenInterceptor implements HttpInterceptor {
+
+  returnUrl = '';
   whitelistedUrls = [
-    '/login',
+    '/api/v1/login',
     '/logout'
   ]
 
   constructor(private router: Router) {
+    if (!this.router.routerState.snapshot.root.queryParams?.['return'] || this.router.routerState.snapshot.root.queryParams?.['return'] === '')
+      this.returnUrl = this.router.routerState.snapshot.url;
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -42,6 +46,13 @@ export class TokenInterceptor implements HttpInterceptor {
       return next.handle(reqWithToken).pipe(
         retry(2),
         catchError((error: HttpErrorResponse) => {
+          if (error.status === 403) {
+            this.router.navigate(['/login'], {
+              queryParams: {
+                return: this.returnUrl
+              }
+            });
+          }
           return throwError(error)
         }),
         finalize(() => {
@@ -50,14 +61,22 @@ export class TokenInterceptor implements HttpInterceptor {
         tap((event: any) => {
           if (event instanceof HttpResponse) {
             if (event.body?.status === 403) {
-              this.router.navigate(['login']);
+              this.router.navigate(['/login'], {
+                queryParams: {
+                  return: this.returnUrl
+                }
+              });
             }
           }
         })
       );
 
     } else {
-      this.router.navigate(['login']);
+      this.router.navigate(['/login'], {
+        queryParams: {
+          return: this.returnUrl
+        }
+      });
     }
 
     return next.handle(req);

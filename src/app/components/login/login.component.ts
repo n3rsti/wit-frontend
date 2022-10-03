@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {DataService} from "../../services/data.service";
 
 @Component({
@@ -10,12 +10,14 @@ import {DataService} from "../../services/data.service";
 })
 export class LoginComponent implements OnInit {
 
+  return = '';
   loginGroup: FormGroup;
   error = null;
 
   constructor(
     private router: Router,
-    private data: DataService
+    private data: DataService,
+    private route: ActivatedRoute
   ) {
     this.loginGroup = new FormGroup(
       {
@@ -26,7 +28,8 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.route.queryParams
+      .subscribe(params =>  this.return = params['return'] || '/');
   }
 
   onSubmit(){
@@ -36,6 +39,7 @@ export class LoginComponent implements OnInit {
           localStorage.setItem("access_token", resp.access_token);
           localStorage.setItem("refresh_token", resp.refresh_token);
           localStorage.setItem("username", this.parseJwt(resp.access_token)["sub"]);
+          this.router.navigate([this.return]);
         }
       },
       error: (err: any) => {

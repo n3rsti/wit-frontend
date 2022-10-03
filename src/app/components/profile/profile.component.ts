@@ -17,6 +17,8 @@ export class ProfileComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    localStorage.setItem('title', 'Profile');
+
     this.username = localStorage.getItem('username') || '';
     this.getUser(this.username);
   }

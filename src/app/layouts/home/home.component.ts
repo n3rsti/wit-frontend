@@ -9,6 +9,8 @@ export class HomeComponent implements OnInit {
   username = localStorage.getItem('username');
   title = localStorage.getItem('title');
 
+  isNavOpened = false;
+
   constructor() {
 
   }

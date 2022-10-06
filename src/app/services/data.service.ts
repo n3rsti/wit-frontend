@@ -29,6 +29,8 @@ export class DataService {
         return new UserBuilder()
           .setId(user.id)
           .setUsername(user.username)
+          .setProfileImage(user.profileImage)
+          .setBackgroundImage(user.backgroundImage)
           .build();
       }),
       retry(2)

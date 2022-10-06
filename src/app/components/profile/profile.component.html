@@ -1,2 +1,17 @@
-{{ user.Username }}
-{{ user.Id }}
+<header class="w-full rounded overflow-hidden border border-solid border-slate-100">
+  <img src="{{ user.BackgroundImage }}" alt="{{ user.Username }} background image" class="w-full h-48 object-cover">
+  <section class="flex justify-center sm:h-20">
+    <div class="flex-wrap h-full flex w-4/5 align-center">
+      <div class="flex w-full sm:w-auto">
+        <img src="{{ user.ProfileImage }}"
+             class="w-32 h-32 -mt-16 rounded-full border border-solid border-white border-4"
+             alt="{{ user.Username }} profile image">
+        <h1
+          class="font-bold font-montserrat leading-7 text-gray-900 text-2xl flex items-center ml-3">{{ user.Username }}</h1>
+      </div>
+      <a routerLink=""
+         class="w-full sm:w-auto inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 ml-auto h-10 self-center mt-3 mb-3 sm:mb-0 sm:mt-0">Edit
+        profile</a>
+    </div>
+  </section>
+</header>

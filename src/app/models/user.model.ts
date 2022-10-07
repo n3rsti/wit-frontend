@@ -62,4 +62,21 @@ export class User extends IUser {
     this.profileImage = builder.ProfileImage;
     this.backgroundImage = builder.BackgroundImage;
   }
+
+  setProfileImage(profileImage: string){
+    this.profileImage = profileImage;
+  }
+
+  setBackgroundImage(backgroundImage: string){
+    this.backgroundImage = backgroundImage;
+  }
+
+  toJSON(): Object {
+    return {
+      id: this.id,
+      username: this.username,
+      profileImage: this.profileImage,
+      backgroundImage: this.backgroundImage
+    }
+  }
 }

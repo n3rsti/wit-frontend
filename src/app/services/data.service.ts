@@ -36,4 +36,7 @@ export class DataService {
       retry(2)
     )
   }
+  updateUser(user: User){
+    return this.http.patch(`${Config.Host}/api/v1/users/${user.Username}`, user.toJSON());
+  }
 }

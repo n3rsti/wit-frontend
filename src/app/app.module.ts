@@ -11,13 +11,15 @@ import { ProfileComponent } from './components/profile/profile.component';
 import {AuthGuard} from "./guards/auth.guard";
 import {DataService} from "./services/data.service";
 import { HomeComponent } from './layouts/home/home.component';
+import { ProfileEditComponent } from './components/profile/profile-edit/profile-edit.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     ProfileComponent,
-    HomeComponent
+    HomeComponent,
+    ProfileEditComponent
   ],
   imports: [
     BrowserModule,

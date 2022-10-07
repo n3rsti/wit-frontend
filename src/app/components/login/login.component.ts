@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {DataService} from "../../services/data.service";
+import {User} from "../../models/user.model";
 
 @Component({
   selector: 'app-login',
@@ -38,7 +39,22 @@ export class LoginComponent implements OnInit {
         if(resp.access_token){
           localStorage.setItem("access_token", resp.access_token);
           localStorage.setItem("refresh_token", resp.refresh_token);
-          localStorage.setItem("username", this.parseJwt(resp.access_token)["sub"]);
+
+          const username = this.parseJwt(resp.access_token)["sub"]
+
+          localStorage.setItem("username", username);
+
+          this.data.getUser(username).subscribe({
+            next: (user: User) => {
+              localStorage.setItem("profile_image", user.ProfileImage);
+              localStorage.setItem("background_image", user.BackgroundImage);
+            },
+            error: (error: any) => {
+              console.log(error);
+            }
+          })
+
+
           this.router.navigate([this.return]);
         }
       },

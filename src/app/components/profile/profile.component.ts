@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {DataService} from "../../services/data.service";
 import {User} from "../../models/user.model";
+import {ActivatedRoute} from "@angular/router";
+import {take} from "rxjs";
 
 @Component({
   selector: 'app-profile',
@@ -11,19 +13,35 @@ export class ProfileComponent implements OnInit {
 
   user: User = <User>{};
   username: string = '';
+  isOwnProfile: boolean = false;
 
   constructor(
-    private data: DataService
-  ) { }
+    private data: DataService,
+    private route: ActivatedRoute,
+  ) {
+  }
 
   ngOnInit(): void {
     localStorage.setItem('title', 'Profile');
 
-    this.username = localStorage.getItem('username') || '';
+    this.route.params.pipe(
+      take(1)
+    ).subscribe((param) => {
+      let username = param['username'];
+      if (username == null)
+        this.username = localStorage.getItem('username') || '';
+      else
+        this.username = username;
+
+      if (this.username == localStorage.getItem('username'))
+        this.isOwnProfile = true;
+    })
+
+
     this.getUser(this.username);
   }
 
-  getUser(username: string){
+  getUser(username: string) {
     this.data.getUser(username).subscribe({
       next: (user: User) => {
         this.user = user;

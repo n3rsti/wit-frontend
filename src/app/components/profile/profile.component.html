@@ -16,40 +16,6 @@
   </section>
 </header>
 <div class="mt-4">
-  <div *ngFor="let post of user.PostList.reverse(); let i = index"
-       class="flex bg-white border border-solid border-slate-100 rounded-lg mx-4 md:mx-auto mb-5 max-w-md md:max-w-2xl transition-opacity duration-300 ease-out post-{{ post.Id }}">
-    <div class="flex items-start px-4 py-6 w-full">
-      <img class="w-10 h-10 rounded-full object-cover mr-4 shadow" src="{{ user.ProfileImage}}"
-           alt="{{ user.Username }} profile image">
-      <div class="w-full">
-        <div class="flex items-center justify-between">
-          <h2 class="text-lg font-semibold text-gray-900 -mt-1">{{ user.Username }}</h2>
-          <!--          <small class="text-sm text-gray-700">22h ago</small>-->
-
-          <div class="relative ml-3" *ngIf="isOwnProfile">
-            <button type="button" (click)="togglePostMenu(i)" (focusout)="closePostMenu()"
-                    class="px-2 py-1 rounded-lg hover:bg-gray-200 focus:bg-gray-200 transition-all duration-75 post_info_button"
-                    id="post-menu-button{{i}}" [attr.aria-expanded]="openedPostMenuIndex == i" aria-haspopup="true">
-              <span class="sr-only">Open post menu</span>
-              <i class="fa-solid fa-ellipsis text-gray-900 text-sm"></i>
-            </button>
-
-            <div [class.invisible]="openedPostMenuIndex != i" [class.scale-95]="openedPostMenuIndex != i"
-                 [class.opacity-0]="openedPostMenuIndex != i"
-                 class="duration-75 transition-all ease-in-out absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                 role="menu" aria-orientation="vertical" [attr.aria-labelledby]="'post-menu-button' + i" tabindex="-1">
-              <button class="flex items-center px-4 py-2 text-sm text-gray-700 text-red-500 w-full"
-                      (click)="deletePost($event)" [attr.data-post]="post.Id"
-                      role="menuitem" tabindex="-1"
-                      id="user-menu-item-0">Delete post <i class="fa-solid fa-trash ml-auto flex "></i></button>
-            </div>
-          </div>
-        </div>
-        <p class="mt-3 text-sm">
-          {{ post.Content }}
-        </p>
-      </div>
-    </div>
-  </div>
+  <app-post *ngFor="let post of user.PostList.reverse()" [post]="post" [author]="user" (deletePostEvent)="createToast()"></app-post>
 </div>
 <app-toast [toastList]="toastList"></app-toast>

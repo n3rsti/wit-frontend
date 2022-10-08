@@ -15,7 +15,6 @@ export class ProfileComponent implements OnInit {
   user: User = <User>{};
   username: string = '';
   isOwnProfile: boolean = false;
-  openedPostMenuIndex = -1;
 
   toastList: ToastOptions[] = [];
 
@@ -57,33 +56,10 @@ export class ProfileComponent implements OnInit {
     })
   }
 
-  togglePostMenu(index: number) {
-    if (index == this.openedPostMenuIndex)
-      this.openedPostMenuIndex = -1;
-    else
-      this.openedPostMenuIndex = index;
-  }
-
-  closePostMenu() {
-    this.openedPostMenuIndex = -1;
-  }
-
-  deletePost(event: any) {
-    const postId = event.target.attributes['data-post'].value;
-
-    this.data.deletePost(postId).subscribe(response => {
-      const responseCode = response.status;
-      if (responseCode === 204)
-        document.querySelector(`.post-${postId}`)?.classList.add('opacity-0');
-      setTimeout(() => {
-        document.querySelector(`.post-${postId}`)?.classList.add('hidden');
-      }, 300);
-      this.toastList.push({
-        content: 'Post deleted',
-        icon: ''
-      })
-
-
+  createToast(){
+    this.toastList.push({
+      content: 'Post deleted',
+      icon: ''
     })
   }
 

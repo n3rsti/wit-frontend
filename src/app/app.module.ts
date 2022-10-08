@@ -12,6 +12,7 @@ import {AuthGuard} from "./guards/auth.guard";
 import {DataService} from "./services/data.service";
 import { HomeComponent } from './layouts/home/home.component';
 import { ProfileEditComponent } from './components/profile/profile-edit/profile-edit.component';
+import { MainComponent } from './components/main/main.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { ProfileEditComponent } from './components/profile/profile-edit/profile-
     LoginComponent,
     ProfileComponent,
     HomeComponent,
-    ProfileEditComponent
+    ProfileEditComponent,
+    MainComponent,
   ],
   imports: [
     BrowserModule,

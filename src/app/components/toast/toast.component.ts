@@ -10,6 +10,12 @@ import {ToastOptions} from "../../interfaces/toast-options";
 
 export class ToastComponent implements OnInit {
 
+  colorSet: {[key: string]: string} = {
+    '': 'text-red-500 bg-red-100',
+    'error': 'text-red-500 bg-red-100',
+    'success': 'text-green-500 bg-green-100'
+  }
+
   @Input() toastList: ToastOptions[] = [];
 
   constructor() { }

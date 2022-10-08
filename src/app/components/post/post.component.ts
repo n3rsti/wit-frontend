@@ -11,7 +11,7 @@ import {ToastOptions} from "../../interfaces/toast-options";
 })
 export class PostComponent implements OnInit {
 
-  @Input() author: User = <User>{};
+  @Input() author: any = <User>{};
   @Input() post: Post = <Post>{};
   @Output() deletePostEvent = new EventEmitter<number>;
 

@@ -1,8 +1,11 @@
+import {Post} from "./post.model";
+
 export class IUser {
   protected id: string = '';
   protected username: string = '';
   protected profileImage: string = '';
   protected backgroundImage: string = '';
+  protected postList: Post[] = [];
 
   get Id(){
     return this.id;
@@ -18,6 +21,10 @@ export class IUser {
 
   get BackgroundImage(){
     return this.backgroundImage;
+  }
+
+  get PostList(){
+    return this.postList;
   }
 
 
@@ -48,6 +55,11 @@ export class UserBuilder extends IUser{
     return this;
   }
 
+  setPostList(postList: Post[]){
+    this.postList = postList;
+    return this;
+  }
+
   build(): User {
     return new User(this);
   }
@@ -61,6 +73,7 @@ export class User extends IUser {
     this.username = builder.Username;
     this.profileImage = builder.ProfileImage;
     this.backgroundImage = builder.BackgroundImage;
+    this.postList = builder.PostList;
   }
 
   setProfileImage(profileImage: string){

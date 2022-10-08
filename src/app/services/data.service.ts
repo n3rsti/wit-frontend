@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {map, Observable, pluck, retry} from "rxjs";
 import {Config} from "../config";
 import {User, UserBuilder} from "../models/user.model";
+import {PostBuilder} from "../models/post.model";
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +32,13 @@ export class DataService {
           .setUsername(user.username)
           .setProfileImage(user.profileImage)
           .setBackgroundImage(user.backgroundImage)
+          .setPostList(user.postList.map((post: any) => {
+            return new PostBuilder()
+              .setId(post.id)
+              .setAuthor(post.author)
+              .setContent(post.content)
+              .build()
+          }))
           .build();
       }),
       retry(2)

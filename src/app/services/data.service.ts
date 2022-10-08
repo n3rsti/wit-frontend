@@ -47,4 +47,7 @@ export class DataService {
   updateUser(user: User){
     return this.http.patch(`${Config.Host}/api/v1/users/${user.Username}`, user.toJSON());
   }
+  deletePost(postId: string){
+    return this.http.delete(`${Config.Host}/api/v1/posts/${postId}`, {observe: 'response'});
+  }
 }

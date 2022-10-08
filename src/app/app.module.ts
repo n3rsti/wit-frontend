@@ -13,6 +13,7 @@ import {DataService} from "./services/data.service";
 import { HomeComponent } from './layouts/home/home.component';
 import { ProfileEditComponent } from './components/profile/profile-edit/profile-edit.component';
 import { MainComponent } from './components/main/main.component';
+import { ToastComponent } from './components/toast/toast.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { MainComponent } from './components/main/main.component';
     HomeComponent,
     ProfileEditComponent,
     MainComponent,
+    ToastComponent,
   ],
   imports: [
     BrowserModule,

@@ -3,6 +3,7 @@ import {DataService} from "../../services/data.service";
 import {User} from "../../models/user.model";
 import {ActivatedRoute} from "@angular/router";
 import {take} from "rxjs";
+import {ToastOptions} from "../../interfaces/toast-options";
 
 @Component({
   selector: 'app-profile',
@@ -15,6 +16,8 @@ export class ProfileComponent implements OnInit {
   username: string = '';
   isOwnProfile: boolean = false;
   openedPostMenuIndex = -1;
+
+  toastList: ToastOptions[] = [];
 
   constructor(
     private data: DataService,
@@ -54,14 +57,34 @@ export class ProfileComponent implements OnInit {
     })
   }
 
-  togglePostMenu(index: number){
-    if(index == this.openedPostMenuIndex)
+  togglePostMenu(index: number) {
+    if (index == this.openedPostMenuIndex)
       this.openedPostMenuIndex = -1;
     else
       this.openedPostMenuIndex = index;
   }
-  closePostMenu(){
+
+  closePostMenu() {
     this.openedPostMenuIndex = -1;
+  }
+
+  deletePost(event: any) {
+    const postId = event.target.attributes['data-post'].value;
+
+    this.data.deletePost(postId).subscribe(response => {
+      const responseCode = response.status;
+      if (responseCode === 204)
+        document.querySelector(`.post-${postId}`)?.classList.add('opacity-0');
+      setTimeout(() => {
+        document.querySelector(`.post-${postId}`)?.classList.add('hidden');
+      }, 300);
+      this.toastList.push({
+        content: 'Post deleted',
+        icon: ''
+      })
+
+
+    })
   }
 
 }

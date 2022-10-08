@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {DataService} from "../../services/data.service";
+import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'app-main',
@@ -7,9 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainComponent implements OnInit {
 
-  constructor() { }
+  postContent = '';
+
+  constructor(
+    private data: DataService
+  ) {
+
+  }
 
   ngOnInit(): void {
+  }
+
+  createPost(){
+
   }
 
 }

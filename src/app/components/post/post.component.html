@@ -1,11 +1,11 @@
 <div [attr.data-post]="post.Id"
      class="flex bg-white border border-solid border-slate-100 rounded-lg mx-4 md:mx-auto mb-5 max-w-md md:max-w-2xl transition-opacity duration-300 ease-out post-{{ post.Id }}">
   <div class="flex items-start px-4 py-6 w-full">
-    <img class="w-10 h-10 rounded-full object-cover mr-4 shadow" src="{{ author.ProfileImage}}"
+    <img class="w-10 h-10 rounded-full object-cover mr-4 shadow cursor-pointer" src="{{ author.ProfileImage}}" [routerLink]="'/profile/'+ author.Username"
          alt="{{ author.Username }} profile image">
     <div class="w-full">
       <div class="flex items-center justify-between">
-        <h2 class="text-lg font-semibold text-gray-900 -mt-1">{{ author.Username }}</h2>
+        <h2 class="text-lg font-semibold text-gray-900 -mt-1 cursor-pointer" [routerLink]="'/profile/' + author.Username">{{ author.Username }}</h2>
         <!--          <small class="text-sm text-gray-700">22h ago</small>-->
 
         <div class="relative ml-3" *ngIf="isOwnProfile">

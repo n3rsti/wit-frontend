@@ -14,6 +14,7 @@ export class ProfileComponent implements OnInit {
   user: User = <User>{};
   username: string = '';
   isOwnProfile: boolean = false;
+  openedPostMenuIndex = -1;
 
   constructor(
     private data: DataService,
@@ -51,6 +52,16 @@ export class ProfileComponent implements OnInit {
         console.log(error);
       }
     })
+  }
+
+  togglePostMenu(index: number){
+    if(index == this.openedPostMenuIndex)
+      this.openedPostMenuIndex = -1;
+    else
+      this.openedPostMenuIndex = index;
+  }
+  closePostMenu(){
+    this.openedPostMenuIndex = -1;
   }
 
 }

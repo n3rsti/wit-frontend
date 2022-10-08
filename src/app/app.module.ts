@@ -14,6 +14,7 @@ import { HomeComponent } from './layouts/home/home.component';
 import { ProfileEditComponent } from './components/profile/profile-edit/profile-edit.component';
 import { MainComponent } from './components/main/main.component';
 import { ToastComponent } from './components/toast/toast.component';
+import { PostComponent } from './components/post/post.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { ToastComponent } from './components/toast/toast.component';
     ProfileEditComponent,
     MainComponent,
     ToastComponent,
+    PostComponent,
   ],
   imports: [
     BrowserModule,

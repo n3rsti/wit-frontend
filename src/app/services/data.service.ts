@@ -3,7 +3,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {map, Observable, pluck, retry} from "rxjs";
 import {Config} from "../config";
 import {User, UserBuilder} from "../models/user.model";
-import {PostBuilder} from "../models/post.model";
+import {Post, PostBuilder} from "../models/post.model";
 
 @Injectable({
   providedIn: 'root'
@@ -49,5 +49,16 @@ export class DataService {
   }
   deletePost(postId: string){
     return this.http.delete(`${Config.Host}/api/v1/posts/${postId}`, {observe: 'response'});
+  }
+  createPost(post: Post): Observable<Post>{
+    return this.http.post(`${Config.Host}/api/v1/posts/`, post.toJSON()).pipe(
+      map((post: any) => {
+        return new PostBuilder()
+          .setId(post.id)
+          .setAuthor(post.author)
+          .setContent(post.content)
+          .build()
+      })
+    );
   }
 }

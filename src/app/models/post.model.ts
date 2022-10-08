@@ -1,6 +1,8 @@
+import {User} from "./user.model";
+
 export class IPost {
   protected id: string = '';
-  protected author: object | string = {};
+  protected author: User | string = <User>{};
   protected content: string = '';
   protected comments: object = {};
 
@@ -32,7 +34,7 @@ export class PostBuilder extends IPost {
     return this;
   }
 
-  setAuthor(author: object | string){
+  setAuthor(author: User | string){
     this.author = author;
     return this;
   }
@@ -55,5 +57,16 @@ export class Post extends IPost {
     this.author = builder.Author;
     this.content = builder.Content;
     this.comments = builder.Comments;
+  }
+
+  setAuthor(author: User){
+    this.author = author;
+  }
+
+  toJSON(){
+    return {
+      author: this.Author,
+      content: this.Content
+    }
   }
 }

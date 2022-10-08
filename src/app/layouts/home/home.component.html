@@ -33,11 +33,11 @@
             </button>
 
             <!-- Profile dropdown -->
-            <div class="relative ml-3" (focusin)="isNavOpened = true" (focusout)="isNavOpened = false">
+            <div class="relative ml-3">
               <div>
-                <button type="button"
+                <button type="button" (click)="isNavOpened = !isNavOpened" (focusout)="isNavOpened = false"
                         class="flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                        id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+                        id="user-menu-button" [attr.aria-expanded]="isNavOpened" aria-haspopup="true">
                   <span class="sr-only">Open user menu</span>
                   <div *ngIf="profileImage == null"
                        class="inline-flex overflow-hidden relative justify-center items-center w-8 h-8 bg-gray-100 rounded-full dark:bg-gray-600">
@@ -48,7 +48,7 @@
                 </button>
               </div>
 
-              <div [class.scale-100]="isNavOpened" [class.opacity-100]="isNavOpened" [class.scale-95]="!isNavOpened"
+              <div [class.invisible]="!isNavOpened" [class.scale-95]="!isNavOpened"
                    [class.opacity-0]="!isNavOpened"
                    class="duration-150 transition-all ease-in-out absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                    role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">

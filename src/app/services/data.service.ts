@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {map, Observable, pluck, retry} from "rxjs";
+import {map, observable, Observable, pluck, retry} from "rxjs";
 import {Config} from "../config";
 import {User, UserBuilder} from "../models/user.model";
 import {Post, PostBuilder} from "../models/post.model";
@@ -24,6 +24,10 @@ export class DataService {
 
   }
 
+  refreshToken(){
+    return this.http.get(`${Config.Host}/api/v1/token/refresh`, {observe: 'response'});
+  }
+
   getUser(username: string): Observable<User>{
     return this.http.get(`${Config.Host}/api/v1/users/${username}`).pipe(
       map((user: any) => {
@@ -41,7 +45,6 @@ export class DataService {
           }))
           .build();
       }),
-      retry(2)
     )
   }
   updateUser(user: User){

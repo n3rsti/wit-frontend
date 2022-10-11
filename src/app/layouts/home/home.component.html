@@ -1,11 +1,11 @@
 <div class="min-h-full">
-  <nav class="bg-gray-800">
+  <nav class="bg-gray-800 w-full fixed top-0 z-20">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="flex h-16 items-center justify-between">
+      <div class="flex h-16 items-center">
         <div class="flex items-center">
           <div class="flex-shrink-0">
             <img class="h-8 w-8" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                 alt="Your Company">
+                 alt="Your Company" routerLink="">
           </div>
           <div class="hidden md:block">
             <div class="ml-10 flex items-baseline space-x-4">
@@ -19,7 +19,7 @@
             </div>
           </div>
         </div>
-        <div class="hidden md:block">
+        <div class="hidden md:block ml-auto">
           <div class="ml-4 flex items-center md:ml-6">
             <button type="button"
                     class="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
@@ -32,43 +32,45 @@
               </svg>
             </button>
 
-            <!-- Profile dropdown -->
-            <div class="relative ml-3">
-              <div>
-                <button type="button" (click)="isNavOpened = !isNavOpened" (focusout)="isNavOpened = false"
-                        class="flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                        id="user-menu-button" [attr.aria-expanded]="isNavOpened" aria-haspopup="true">
-                  <span class="sr-only">Open user menu</span>
-                  <div *ngIf="profileImage == null"
-                       class="inline-flex overflow-hidden relative justify-center items-center w-8 h-8 bg-gray-100 rounded-full dark:bg-gray-600">
-                    <span
-                      class="font-medium text-gray-600 dark:text-gray-300">{{ username == null ? '' : username[0] }}</span>
-                  </div>
-                  <img *ngIf="profileImage != null" class="h-8 w-8 rounded-full" [src]="profileImage" alt="">
-                </button>
-              </div>
 
-              <div [class.invisible]="!isNavOpened" [class.scale-95]="!isNavOpened"
-                   [class.opacity-0]="!isNavOpened"
-                   class="duration-150 transition-all ease-in-out absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                   role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
-                <!-- Active: "bg-gray-100", Not Active: "" -->
-                <a routerLink="/profile" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
-                   id="user-menu-item-0">Your Profile</a>
-
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
-                   id="user-menu-item-1">Settings</a>
-
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
-                   id="user-menu-item-2">Sign out</a>
-              </div>
-            </div>
           </div>
         </div>
+        <!-- Profile dropdown -->
+        <div class="relative ml-auto sm:ml-3">
+          <div>
+            <button type="button" (click)="isNavOpened = !isNavOpened" (focusout)="isNavOpened = false"
+                    class="flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                    id="user-menu-button" [attr.aria-expanded]="isNavOpened" aria-haspopup="true">
+              <span class="sr-only">Open user menu</span>
+              <div *ngIf="profileImage == null"
+                   class="inline-flex overflow-hidden relative justify-center items-center w-8 h-8 bg-gray-100 rounded-full dark:bg-gray-600">
+                    <span
+                      class="font-medium text-gray-600 dark:text-gray-300">{{ username == null ? '' : username[0] }}</span>
+              </div>
+              <img *ngIf="profileImage != null" class="h-8 w-8 rounded-full" [src]="profileImage" alt="">
+            </button>
+          </div>
+
+          <div [class.invisible]="!isNavOpened" [class.scale-95]="!isNavOpened"
+               [class.opacity-0]="!isNavOpened"
+               class="duration-150 transition-all ease-in-out absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+               role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+            <!-- Active: "bg-gray-100", Not Active: "" -->
+            <a routerLink="/profile" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
+               id="user-menu-item-0">Your Profile</a>
+
+            <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
+               id="user-menu-item-1">Settings</a>
+
+            <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
+               id="user-menu-item-2">Sign out</a>
+          </div>
+        </div>
+
       </div>
     </div>
   </nav>
-  <main>
+  <main class="mt-16">
     <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
       <router-outlet></router-outlet>
     </div>

@@ -51,11 +51,11 @@ export class LoginComponent implements OnInit {
             },
             error: (error: any) => {
               console.log(error);
+            },
+            complete: () => {
+              this.router.navigate([this.return]);
             }
           })
-
-
-          this.router.navigate([this.return]);
         }
       },
       error: (err: any) => {

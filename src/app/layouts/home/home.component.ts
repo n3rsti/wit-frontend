@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-home',
@@ -6,19 +6,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  username = localStorage.getItem('username');
-  title = localStorage.getItem('title');
-  profileImage = localStorage.getItem('profile_image');
+  username = '';
+  profileImage = '';
+
 
   isNavOpened = false;
 
   constructor() {
-
   }
 
 
   ngOnInit(): void {
-
+    this.username = localStorage.getItem('username') || '';
+    this.profileImage = localStorage.getItem('profile_image') || '';
   }
 
 }

@@ -23,6 +23,7 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getPosts();
   }
 
   createPost(){
@@ -40,7 +41,7 @@ export class MainComponent implements OnInit {
             .setBackgroundImage(localStorage.getItem('background_image') || '')
             .build()
         );
-        this.postList.unshift(post);
+        this.postList.push(post);
         this.toastList.push(
           {
             content: 'Post created',
@@ -61,6 +62,16 @@ export class MainComponent implements OnInit {
       {
         content: 'Post deleted',
         icon: ''
+      }
+    )
+  }
+
+  getPosts(){
+    this.data.getPosts().subscribe(
+      {
+        next: (posts) => {
+          this.postList = posts;
+        }
       }
     )
   }

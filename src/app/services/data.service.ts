@@ -64,4 +64,23 @@ export class DataService {
       })
     );
   }
+
+  getPosts(): Observable<Post[]>{
+    return this.http.get(`${Config.Host}/api/v1/posts/`).pipe(
+      map((data: any) => (data || Array()).map((post: any) => {
+        return new PostBuilder()
+          .setId(post.id)
+          .setContent(post.content)
+          .setAuthor(
+            new UserBuilder()
+              .setUsername(post.author[0].username)
+              .setId(post.author[0].id)
+              .setProfileImage(post.author[0].profileImage)
+              .setBackgroundImage(post.author[0].backgroundImage)
+              .build()
+          )
+          .build();
+      }))
+    )
+  }
 }

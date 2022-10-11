@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {DataService} from "../../services/data.service";
-import {User} from "../../models/user.model";
+import {User, UserBuilder} from "../../models/user.model";
 import {ActivatedRoute} from "@angular/router";
 import {take} from "rxjs";
 import {ToastOptions} from "../../interfaces/toast-options";
@@ -12,7 +12,7 @@ import {ToastOptions} from "../../interfaces/toast-options";
 })
 export class ProfileComponent implements OnInit {
 
-  user: User = <User>{};
+  user: User = new UserBuilder().build();
   username: string = '';
   isOwnProfile: boolean = false;
 

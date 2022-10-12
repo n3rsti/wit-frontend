@@ -4,11 +4,11 @@
     <img class="w-10 h-10 rounded-full object-cover mr-4 shadow cursor-pointer" src="{{ author.ProfileImage}}" [routerLink]="'/profile/'+ author.Username"
          alt="{{ author.Username }} profile image">
     <div class="w-full">
-      <div class="flex items-center justify-between">
+      <div class="flex items-center">
         <h2 class="text-lg font-semibold text-gray-900 -mt-1 cursor-pointer" [routerLink]="'/profile/' + author.Username">{{ author.Username }}</h2>
-        <!--          <small class="text-sm text-gray-700">22h ago</small>-->
+        <small class="text-sm text-gray-700 ml-3">{{ dateDiff }}</small>
 
-        <div class="relative ml-3" *ngIf="isOwnProfile">
+        <div class="relative ml-auto" *ngIf="isOwnProfile">
           <button type="button" (click)="isMenuOpened = !isMenuOpened" (focusout)="isMenuOpened = false"
                   class="px-2 py-1 rounded-lg hover:bg-gray-200 focus:bg-gray-200 transition-all duration-75 post_info_button"
                   id="post-menu-button-{{post.Id}}" [attr.aria-expanded]="isMenuOpened" aria-haspopup="true">

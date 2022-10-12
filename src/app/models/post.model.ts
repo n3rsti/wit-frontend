@@ -22,6 +22,10 @@ export class IPost {
     return this.comments;
   }
 
+  get CreationDate(){
+    return new Date(parseInt(this.id.substring(0, 8), 16) * 1000);
+  }
+
 }
 
 export class PostBuilder extends IPost {

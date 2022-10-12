@@ -14,6 +14,7 @@ export class PostComponent implements OnInit {
   @Input() author: any = <User>{};
   @Input() post: Post = <Post>{};
   @Output() deletePostEvent = new EventEmitter<number>;
+  dateDiff: string = '';
 
   isOwnProfile = false;
   isMenuOpened = false;
@@ -24,6 +25,25 @@ export class PostComponent implements OnInit {
 
   ngOnInit(): void {
     this.isOwnProfile = localStorage.getItem('username') == this.author.Username;
+    console.log(this.post.CreationDate);
+
+    const dateDiffMinutes = Math.floor((new Date().getTime() -  this.post.CreationDate.getTime()) / (60*1000));
+
+    switch (true) {
+      case dateDiffMinutes < 1:
+        this.dateDiff = "Just now";
+        break;
+      case dateDiffMinutes < 60:
+        this.dateDiff = `${dateDiffMinutes}m`;
+        break;
+      case dateDiffMinutes < 24 * 60:
+        this.dateDiff = `${Math.floor(dateDiffMinutes / 60)}h`;
+        break;
+      default:
+        this.dateDiff = `${Math.floor(dateDiffMinutes / 60 / 24)}d`;
+        break;
+    }
+
   }
 
   deletePost() {

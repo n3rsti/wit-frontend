@@ -71,6 +71,7 @@ export class DataService {
         return new PostBuilder()
           .setId(post.id)
           .setContent(post.content)
+          .setCommentCount(post.commentCount)
           .setAuthor(
             new UserBuilder()
               .setUsername(post.author[0].username)

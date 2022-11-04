@@ -4,7 +4,8 @@ export class IPost {
   protected id: string = '';
   protected author: User | string = <User>{};
   protected content: string = '';
-  protected comments: object = {};
+  protected comments: Comment[] = [];
+  protected commentCount = 0;
 
   get Id(){
     return this.id;
@@ -24,6 +25,12 @@ export class IPost {
 
   get CreationDate(){
     return new Date(parseInt(this.id.substring(0, 8), 16) * 1000);
+  }
+
+  get CommentCount(){
+    if(this.comments.length > 0)
+      return this.comments.length;
+    return this.commentCount;
   }
 
 }
@@ -48,6 +55,11 @@ export class PostBuilder extends IPost {
     return this;
   }
 
+  setCommentCount(commentCount: number){
+    this.commentCount = commentCount;
+    return this;
+  }
+
   build(): Post {
     return new Post(this);
   }
@@ -60,7 +72,8 @@ export class Post extends IPost {
     this.id = builder.Id;
     this.author = builder.Author;
     this.content = builder.Content;
-    this.comments = builder.Comments;
+    this.comments = builder.Comments
+    this.commentCount = builder.CommentCount;
   }
 
   setAuthor(author: User){

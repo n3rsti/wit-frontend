@@ -25,7 +25,6 @@ export class PostComponent implements OnInit {
 
   ngOnInit(): void {
     this.isOwnProfile = localStorage.getItem('username') == this.author.Username;
-    console.log(this.post.CreationDate);
 
     const dateDiffMinutes = Math.floor((new Date().getTime() -  this.post.CreationDate.getTime()) / (60*1000));
 

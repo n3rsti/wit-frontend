@@ -3,6 +3,7 @@ import {User} from "../../models/user.model";
 import {Post} from "../../models/post.model";
 import {DataService} from "../../services/data.service";
 import {ToastOptions} from "../../interfaces/toast-options";
+import {CommentBuilder} from "../../models/comment.model";
 
 @Component({
   selector: 'app-post',
@@ -14,10 +15,13 @@ export class PostComponent implements OnInit {
   @Input() author: any = <User>{};
   @Input() post: Post = <Post>{};
   @Output() deletePostEvent = new EventEmitter<number>;
+  @Output() postCommentEvent = new EventEmitter;
   dateDiff: string = '';
 
   isOwnProfile = false;
   isMenuOpened = false;
+
+  comment = '';
 
   constructor(
     private data: DataService
@@ -66,6 +70,21 @@ export class PostComponent implements OnInit {
       this.deletePostEvent.emit();
 
 
+    })
+  }
+
+  postComment(){
+    const comment = new CommentBuilder()
+      .setPostId(this.post.Id)
+      .setContent(this.comment)
+      .build();
+
+    this.data.postComment(comment).subscribe(response => {
+      if(response.status === 201){
+        this.comment = '';
+        this.post.incrementCommentCount();
+        this.postCommentEvent.emit();
+      }
     })
   }
 

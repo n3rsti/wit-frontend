@@ -65,6 +65,8 @@ export class ProfileEditComponent implements OnInit {
     this.data.updateUser(this.user).subscribe({
       next: (response: any) => {
         console.log(response);
+        localStorage.setItem("profile_image", this.user.ProfileImage);
+        localStorage.setItem("background_image", this.user.BackgroundImage);
       },
       error: (err: Error) => {
         console.log(err);

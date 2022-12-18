@@ -80,6 +80,10 @@ export class Post extends IPost {
     this.author = author;
   }
 
+  incrementCommentCount(){
+    this.commentCount += 1;
+  }
+
   toJSON(){
     return {
       author: this.Author,

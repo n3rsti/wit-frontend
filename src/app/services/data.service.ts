@@ -4,6 +4,7 @@ import {map, observable, Observable, pluck, retry} from "rxjs";
 import {Config} from "../config";
 import {User, UserBuilder} from "../models/user.model";
 import {Post, PostBuilder} from "../models/post.model";
+import {Comment, CommentBuilder} from "../models/comment.model";
 
 @Injectable({
   providedIn: 'root'
@@ -41,6 +42,7 @@ export class DataService {
               .setId(post.id)
               .setAuthor(post.author)
               .setContent(post.content)
+              .setCommentCount(post.commentCount)
               .build()
           }))
           .build();
@@ -83,5 +85,9 @@ export class DataService {
           .build();
       }))
     )
+  }
+
+  postComment(comment: Comment) {
+    return this.http.post(`${Config.Host}/api/v1/posts/${comment.PostId}/comments/`, {"content": comment.Content}, {observe: 'response'});
   }
 }

@@ -1,5 +1,5 @@
 <div [attr.data-post]="post.Id"
-     class="flex bg-white border border-solid border-slate-100 rounded-lg mx-4 md:mx-auto mb-5 max-w-md md:max-w-2xl transition-opacity duration-300 ease-out post-{{ post.Id }}">
+     class="flex flex-col bg-white border border-solid border-slate-100 rounded-lg mx-4 md:mx-auto mb-5 max-w-md md:max-w-2xl transition-opacity duration-300 ease-out post-{{ post.Id }}">
   <div class="flex items-start px-4 py-6 w-full">
     <img class="w-10 h-10 rounded-full object-cover mr-4 shadow cursor-pointer" src="{{ author.ProfileImage}}" [routerLink]="'/profile/'+ author.Username"
          alt="{{ author.Username }} profile image">
@@ -27,7 +27,7 @@
           </div>
         </div>
       </div>
-      <p class="mt-3 text-sm">
+      <p class="mt-3 text-sm break-all w-100">
         {{ post.Content }}
       </p>
       <div class="mt-4 flex items-center">
@@ -35,9 +35,22 @@
           <svg fill="none" viewBox="0 0 24 24" class="w-4 h-4 mr-1" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/>
           </svg>
-          <span>{{ post.CommentCount }} comments</span>
+          <span *ngIf="post.CommentCount != 1">{{ post.CommentCount }} comments</span>
+          <span *ngIf="post.CommentCount === 1">{{ post.CommentCount }} comment</span>
         </div>
       </div>
+
     </div>
   </div>
+  <form class="border border-solid border-slate-100">
+    <label for="comment" class="sr-only">Add comment</label>
+    <div class="flex items-center px-3 py-2 rounded-lg bg-gray-100 dark:bg-gray-700">
+      <input [(ngModel)]="comment" type="text" id="comment" name="comment" class="h-10 block mx-0 pr-0 mr-0 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg rounded-r-none border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Your comment...">
+      <button (click)="postComment()" type="submit" class="rounded-l-none h-10 inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800">
+        <svg aria-hidden="true" class="w-4 h-4 rotate-90" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"></path></svg>
+      </button>
+    </div>
+
+  </form>
 </div>
+

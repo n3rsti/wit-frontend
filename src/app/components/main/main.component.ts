@@ -65,6 +65,14 @@ export class MainComponent implements OnInit {
       }
     )
   }
+  postCommentToast(){
+    this.toastList.push(
+      {
+        content: 'Comment created',
+        icon: 'success'
+      }
+    )
+  }
 
   getPosts(){
     this.data.getPosts().subscribe(

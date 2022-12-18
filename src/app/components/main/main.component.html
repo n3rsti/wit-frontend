@@ -13,5 +13,5 @@
   </div>
 </div>
 
-<app-post *ngFor="let post of postList.reverse()" [post]="post" [author]="post.Author" (deletePostEvent)="deletePostToast()"></app-post>
+<app-post *ngFor="let post of postList.reverse()" [post]="post" [author]="post.Author" (deletePostEvent)="deletePostToast()" (postCommentEvent)="postCommentToast()"></app-post>
 <app-toast [toastList]="toastList"></app-toast>

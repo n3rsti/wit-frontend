@@ -43,6 +43,22 @@ export class DataService {
               .setAuthor(post.author)
               .setContent(post.content)
               .setCommentCount(post.commentCount)
+              .setComments(
+                post.comments.map((comment: any) => {
+                  return new CommentBuilder()
+                    .setId(comment.id)
+                    .setPostId(comment.postId)
+                    .setParentCommentId(comment.parentCommentId)
+                    .setAuthor(
+                      new UserBuilder()
+                        .setUsername(comment.author[0].username)
+                        .setProfileImage(comment.author[0].profileImage)
+                        .build()
+                    )
+                    .setContent(comment.content)
+                    .build();
+                })
+              )
               .build()
           }))
           .build();

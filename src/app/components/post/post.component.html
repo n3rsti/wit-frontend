@@ -1,11 +1,13 @@
 <div [attr.data-post]="post.Id"
-     class="flex flex-col bg-white border border-solid border-slate-100 rounded-lg mx-4 md:mx-auto mb-5 max-w-md md:max-w-2xl transition-opacity duration-300 ease-out post-{{ post.Id }}">
+     class="flex flex-col bg-white border border-2 border-solid border-slate-100 rounded-lg mx-4 md:mx-auto mb-5 max-w-md md:max-w-2xl transition-opacity duration-300 ease-out post-{{ post.Id }}">
   <div class="flex items-start px-4 py-6 w-full">
-    <img class="w-10 h-10 rounded-full object-cover mr-4 shadow cursor-pointer" src="{{ author.ProfileImage}}" [routerLink]="'/profile/'+ author.Username"
-         alt="{{ author.Username }} profile image">
     <div class="w-full">
       <div class="flex items-center">
-        <h2 class="text-lg font-semibold text-gray-900 -mt-1 cursor-pointer" [routerLink]="'/profile/' + author.Username">{{ author.Username }}</h2>
+        <img class="w-10 h-10 rounded-full object-cover mr-4 shadow cursor-pointer" src="{{ author.ProfileImage}}"
+             [routerLink]="'/profile/'+ author.Username"
+             alt="{{ author.Username }} profile image">
+        <h2 class="text-lg font-semibold text-gray-900 -mt-1 cursor-pointer"
+            [routerLink]="'/profile/' + author.Username">{{ author.Username }}</h2>
         <small class="text-sm text-gray-700 ml-3">{{ dateDiff }}</small>
 
         <div class="relative ml-auto" *ngIf="isOwnProfile">
@@ -19,7 +21,8 @@
           <div [class.invisible]="!isMenuOpened" [class.scale-95]="!isMenuOpened"
                [class.opacity-0]="!isMenuOpened"
                class="duration-75 transition-all ease-in-out absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-               role="menu" aria-orientation="vertical" [attr.aria-labelledby]="'post-menu-button-' + post" tabindex="-1">
+               role="menu" aria-orientation="vertical" [attr.aria-labelledby]="'post-menu-button-' + post"
+               tabindex="-1">
             <button class="flex items-center px-4 py-2 text-sm text-gray-700 text-red-500 w-full"
                     (click)="deletePost()" [attr.data-post]="post.Id"
                     role="menuitem" tabindex="-1"
@@ -32,22 +35,49 @@
       </p>
       <div class="mt-4 flex items-center">
         <div class="flex mr-2 text-gray-700 text-xs mr-8">
-          <svg fill="none" viewBox="0 0 24 24" class="w-4 h-4 mr-1" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/>
+          <svg fill="none" viewBox="0 0 24 24" class="w-4 h-4 mr-1" stroke="#4338ca">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                  d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/>
           </svg>
-          <span *ngIf="post.CommentCount != 1">{{ post.CommentCount }} comments</span>
-          <span *ngIf="post.CommentCount === 1">{{ post.CommentCount }} comment</span>
+          <span *ngIf="post.CommentCount != 1" class="text-indigo-700 font-medium">{{ post.CommentCount }} comments</span>
+          <span *ngIf="post.CommentCount === 1" class="text-indigo-700 font-medium">{{ post.CommentCount }} comment</span>
         </div>
       </div>
 
     </div>
   </div>
+  <div>
+    <ul>
+      <li *ngFor="let comment of post.Comments.reverse()" class="border-t border-t-solid border-slate-100 border-t-2 px-6 flex flex-col">
+        <section class="flex items-center align-center mt-2">
+          <img class="w-5 h-5 rounded-full object-cover mr-2 shadow cursor-pointer" src="{{ comment.Author.ProfileImage }}"
+               [routerLink]="'/profile/'+ comment.Author.Username"
+               alt="{{ comment.Author.Username }} profile image">
+          <h2 class="text-sm font-semibold text-gray-900 cursor-pointer"
+              [routerLink]="'/profile/'">{{ comment.Author.Username}}</h2>
+          <small class="text-sm text-gray-700 ml-3">{{ convertTime(comment.CreationDate.getTime()) }}</small>
+        </section>
+        <p class="my-2 text-sm">
+          {{ comment.Content }}
+        </p>
+
+      </li>
+    </ul>
+  </div>
+
   <form class="border border-solid border-slate-100">
     <label for="comment" class="sr-only">Add comment</label>
     <div class="flex items-center px-3 py-2 rounded-lg bg-gray-100 dark:bg-gray-700">
-      <input [(ngModel)]="comment" type="text" id="comment" name="comment" class="h-10 block mx-0 pr-0 mr-0 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg rounded-r-none border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Your comment...">
-      <button (click)="postComment()" type="submit" class="rounded-l-none h-10 inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800">
-        <svg aria-hidden="true" class="w-4 h-4 rotate-90" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"></path></svg>
+      <input [(ngModel)]="comment" type="text" id="comment" name="comment"
+             class="h-10 block mx-0 pr-0 mr-0 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg rounded-r-none border border-gray-300 focus:ring-indigo-700 focus:border-indigo-700 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+             placeholder="Your comment...">
+      <button (click)="postComment()" type="submit"
+              class="rounded-l-none h-10 inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-indigo-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800">
+        <svg aria-hidden="true" class="w-4 h-4 rotate-90" fill="currentColor" viewBox="0 0 20 20"
+             xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"></path>
+        </svg>
       </button>
     </div>
 

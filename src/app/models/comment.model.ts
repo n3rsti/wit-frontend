@@ -1,10 +1,10 @@
-import {User} from "./user.model";
+import {User, UserBuilder} from "./user.model";
 
 export class IComment {
   protected id: string = '';
   protected postId: string = '';
   protected parentCommentId: string = '';
-  protected author: User | string = <User>{};
+  protected author: User = new UserBuilder().build();
   protected content: string = '';
 
   get Id(){
@@ -25,6 +25,10 @@ export class IComment {
 
   get Content(){
     return this.content;
+  }
+
+  get CreationDate(){
+    return new Date(parseInt(this.id.substring(0, 8), 16) * 1000);
   }
 
 }
@@ -49,7 +53,7 @@ export class CommentBuilder extends IComment {
     return this;
   }
 
-  setAuthor(author: User | string){
+  setAuthor(author: User){
     this.author = author;
     return this;
   }

@@ -1,4 +1,5 @@
 import {User} from "./user.model";
+import {Comment} from "./comment.model";
 
 export class IPost {
   protected id: string = '';
@@ -52,6 +53,11 @@ export class PostBuilder extends IPost {
 
   setContent(content: string){
     this.content = content;
+    return this;
+  }
+
+  setComments(comments: Comment[]){
+    this.comments = comments;
     return this;
   }
 

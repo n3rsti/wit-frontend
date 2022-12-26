@@ -77,4 +77,8 @@ export class Comment extends IComment {
     this.author = builder.Author;
     this.content = builder.Content;
   }
+
+  setAuthor(user: User) {
+    this.author = user;
+  }
 }

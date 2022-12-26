@@ -29,8 +29,6 @@ export class IPost {
   }
 
   get CommentCount(){
-    if(this.comments.length > 0)
-      return this.comments.length;
     return this.commentCount;
   }
 

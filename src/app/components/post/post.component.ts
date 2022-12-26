@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {User} from "../../models/user.model";
+import {User, UserBuilder} from "../../models/user.model";
 import {Post} from "../../models/post.model";
 import {DataService} from "../../services/data.service";
 import {ToastOptions} from "../../interfaces/toast-options";
@@ -22,6 +22,8 @@ export class PostComponent implements OnInit {
   isMenuOpened = false;
 
   comment = '';
+  commentCount = 1;
+  showComments: boolean = true;
 
   constructor(
     private data: DataService
@@ -31,6 +33,7 @@ export class PostComponent implements OnInit {
     this.isOwnProfile = localStorage.getItem('username') == this.author.Username;
 
     this.dateDiff = this.convertTime(this.post.CreationDate.getTime());
+    console.log(this.post);
 
   }
 
@@ -86,8 +89,21 @@ export class PostComponent implements OnInit {
       .setContent(this.comment)
       .build();
 
-    this.data.postComment(comment).subscribe(response => {
-      if(response.status === 201){
+
+
+
+
+    this.data.postComment(comment).subscribe({
+      next: (responseComment) => {
+        comment.setAuthor(
+          new UserBuilder()
+            .setUsername(localStorage.getItem('username') || '')
+            .setProfileImage(localStorage.getItem('profile_image') || '')
+            .setBackgroundImage(localStorage.getItem('background_image') || '')
+            .build()
+        );
+        this.post.Comments.push(comment);
+
         this.comment = '';
         this.post.incrementCommentCount();
         this.postCommentEvent.emit();

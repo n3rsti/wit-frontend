@@ -98,12 +98,37 @@ export class DataService {
               .setBackgroundImage(post.author[0].backgroundImage)
               .build()
           )
+          .setComments(
+            post.comments.map((comment: any) => {
+              return new CommentBuilder()
+                .setId(comment.id)
+                .setPostId(comment.postId)
+                .setContent(comment.content)
+                .setAuthor(
+                  new UserBuilder()
+                    .setId(comment.author.id)
+                    .setUsername(comment.author.username)
+                    .setProfileImage(comment.author.profileImage)
+                    .setBackgroundImage(comment.author.backgroundImage)
+                    .build()
+                )
+                .build()
+            })
+          )
           .build();
       }))
     )
   }
 
   postComment(comment: Comment) {
-    return this.http.post(`${Config.Host}/api/v1/posts/${comment.PostId}/comments/`, {"content": comment.Content}, {observe: 'response'});
+    return this.http.post(`${Config.Host}/api/v1/posts/${comment.PostId}/comments/`, {"content": comment.Content}, {observe: 'response'}).pipe(
+      map((comment: any) => {
+        return new CommentBuilder()
+          .setId(comment.id)
+          .setPostId(comment.postId)
+          .setContent(comment.content)
+          .build()
+      })
+    );
   }
 }

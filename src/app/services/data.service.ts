@@ -131,4 +131,24 @@ export class DataService {
       })
     );
   }
+
+  getPostComments(postId: string, page: number, size: number){
+    return this.http.get(`${Config.Host}/api/v1/posts/${postId}/comments?page=${page}&size=${size}`).pipe(
+      map((data: any) => (data || Array()).map((comment: any) => {
+        return new CommentBuilder()
+          .setId(comment.id)
+          .setPostId(comment.postId)
+          .setContent(comment.content)
+          .setAuthor(
+            new UserBuilder()
+              .setId(comment.author.id)
+              .setUsername(comment.author.username)
+              .setProfileImage(comment.author.profileImage)
+              .setBackgroundImage(comment.author.backgroundImage)
+              .build()
+          )
+          .build()
+      }))
+    )
+  }
 }

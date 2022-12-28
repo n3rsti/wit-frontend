@@ -88,6 +88,10 @@ export class Post extends IPost {
     this.commentCount += 1;
   }
 
+  setComments(comments: Comment[]){
+    this.comments = comments;
+  }
+
   toJSON(){
     return {
       author: this.Author,

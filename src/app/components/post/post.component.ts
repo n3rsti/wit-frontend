@@ -21,24 +21,27 @@ export class PostComponent implements OnInit {
   isOwnProfile = false;
   isMenuOpened = false;
 
+
   comment = '';
   commentCount = 1;
+  commentPage = 0;
   showComments: boolean = true;
 
   constructor(
     private data: DataService
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
+    console.log(this.post.Comments);
     this.isOwnProfile = localStorage.getItem('username') == this.author.Username;
 
     this.dateDiff = this.convertTime(this.post.CreationDate.getTime());
-    console.log(this.post);
 
   }
 
-  convertTime(time: number){
-    const dateDiffMinutes = Math.floor((new Date().getTime() -  time) / (60*1000));
+  convertTime(time: number) {
+    const dateDiffMinutes = Math.floor((new Date().getTime() - time) / (60 * 1000));
     let dateDiff = '';
 
     switch (true) {
@@ -83,14 +86,11 @@ export class PostComponent implements OnInit {
     })
   }
 
-  postComment(){
+  postComment() {
     const comment = new CommentBuilder()
       .setPostId(this.post.Id)
       .setContent(this.comment)
       .build();
-
-
-
 
 
     this.data.postComment(comment).subscribe({
@@ -109,6 +109,17 @@ export class PostComponent implements OnInit {
         this.postCommentEvent.emit();
       }
     })
+  }
+
+  loadComments() {
+
+    this.data.getPostComments(this.post.Id, this.commentCount, 4).subscribe({
+        next: (comments) => {
+          this.post.setComments(this.post.Comments.concat(comments));
+          this.commentCount += comments.length;
+        }
+      }
+    )
   }
 
 }

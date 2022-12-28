@@ -52,8 +52,8 @@
   </div>
   <div *ngIf="showComments">
     <ul>
-      <li *ngFor="let comment of post.Comments.reverse().slice(0, commentCount)"
-          class="border-t border-t-solid border-slate-100 border-t-2 px-6 flex flex-col last:border-b-2 animate ">
+      <li *ngFor="let comment of post.Comments.slice(0, commentCount)"
+          class="border-t border-t-solid border-slate-100 border-t-2 px-6 flex flex-col last:border-b-2 animate">
         <section class="flex items-center align-center mt-2">
           <img class="w-5 h-5 rounded-full object-cover mr-2 shadow cursor-pointer"
                src="{{ comment.Author.ProfileImage }}"
@@ -70,7 +70,7 @@
       </li>
     </ul>
     <button class="w-full text-center py-2 font-semibold text-indigo-700 text-sm"
-            *ngIf="commentCount < post.CommentCount" (click)="commentCount = commentCount + 3">Load more
+            *ngIf="commentCount < post.CommentCount" (click)="loadComments()">Load more
       ({{ post.CommentCount - commentCount }})
     </button>
   </div>

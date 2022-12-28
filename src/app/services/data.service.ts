@@ -132,8 +132,8 @@ export class DataService {
     );
   }
 
-  getPostComments(postId: string, page: number, size: number){
-    return this.http.get(`${Config.Host}/api/v1/posts/${postId}/comments?page=${page}&size=${size}`).pipe(
+  getPostComments(postId: string, skipCount: number, size: number){
+    return this.http.get(`${Config.Host}/api/v1/posts/${postId}/comments?skipCount=${skipCount}&size=${size}`).pipe(
       map((data: any) => (data || Array()).map((comment: any) => {
         return new CommentBuilder()
           .setId(comment.id)
@@ -141,10 +141,10 @@ export class DataService {
           .setContent(comment.content)
           .setAuthor(
             new UserBuilder()
-              .setId(comment.author.id)
-              .setUsername(comment.author.username)
-              .setProfileImage(comment.author.profileImage)
-              .setBackgroundImage(comment.author.backgroundImage)
+              .setId(comment.author[0].id)
+              .setUsername(comment.author[0].username)
+              .setProfileImage(comment.author[0].profileImage)
+              .setBackgroundImage(comment.author[0].backgroundImage)
               .build()
           )
           .build()

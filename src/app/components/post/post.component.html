@@ -60,7 +60,7 @@
                [routerLink]="'/profile/'+ comment.Author.Username"
                alt="{{ comment.Author.Username }} profile image">
           <h2 class="text-sm font-semibold text-gray-900 cursor-pointer"
-              [routerLink]="'/profile/'">{{ comment.Author.Username}}</h2>
+              [routerLink]="'/profile/' + comment.Author.Username">{{ comment.Author.Username}}</h2>
           <small class="text-sm text-gray-700 ml-3">{{ convertTime(comment.CreationDate.getTime()) }}</small>
         </section>
         <p class="my-2 text-sm">

@@ -26,22 +26,24 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     localStorage.setItem('title', 'Profile');
+    
+    this.route.params.subscribe((param) => {
+      this.route.params.pipe(
+        take(1)
+      ).subscribe((param) => {
+        let username = param['username'];
+        if (username == null)
+          this.username = localStorage.getItem('username') || '';
+        else
+          this.username = username;
 
-    this.route.params.pipe(
-      take(1)
-    ).subscribe((param) => {
-      let username = param['username'];
-      if (username == null)
-        this.username = localStorage.getItem('username') || '';
-      else
-        this.username = username;
+        if (this.username == localStorage.getItem('username'))
+          this.isOwnProfile = true;
+      })
 
-      if (this.username == localStorage.getItem('username'))
-        this.isOwnProfile = true;
+      this.getUser(this.username);
     })
 
-
-    this.getUser(this.username);
   }
 
   getUser(username: string) {
